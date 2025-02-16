@@ -46,7 +46,7 @@ func main() {
 
     // Setup and start Gin server
     router := gin.Default()
-    router.GET("/logs", internal.GetLogs)
+    router.GET("/logs", internal.AuthMiddleware(), internal.GetLogs)
     
     go func() {
         if err := router.Run(":8080"); err != nil {

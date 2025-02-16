@@ -6,6 +6,18 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+func AuthMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        apiKey := c.GetHeader("X-API-Key")
+        if apiKey != os.Getenv("API_KEY") {
+            c.JSON(401, gin.H{"error": "Unauthorized"})
+            c.Abort()
+            return
+        }
+        c.Next()
+    }
+}
+
 func GetLogs(c *gin.Context) {
     content, err := os.ReadFile("api.log")
     if err != nil {

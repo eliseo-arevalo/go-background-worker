@@ -1,0 +1,6 @@
+## API Documentation
+
+### Get Logs
+
+GET http://localhost:8080/logs
+X-API-Key: fua-la-revivis-scooby
