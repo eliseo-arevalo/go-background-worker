@@ -3,8 +3,7 @@ package internal
 import (
     "encoding/json"
     "os"
-
-    "github.com/joho/godotenv"
+    "log"
 )
 
 type APIConfig struct {
@@ -13,13 +12,10 @@ type APIConfig struct {
 }
 
 func LoadConfig() ([]APIConfig, error) {
-    if err := godotenv.Load(); err != nil {
-        return nil, err
-    }
-
     apisEnv := os.Getenv("APIS")
     if apisEnv == "" {
-        return nil, nil
+        log.Println("⚠️ APIS environment variable not found, using default configuration")
+        return []APIConfig{}, nil
     }
 
     var apiConfigs []APIConfig

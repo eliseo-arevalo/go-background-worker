@@ -49,7 +49,12 @@ func main() {
     router.GET("/logs", internal.AuthMiddleware(), internal.GetLogs)
     
     go func() {
-        if err := router.Run(":8080"); err != nil {
+        port := os.Getenv("PORT")
+        if port == "" {
+            port = "8080"
+        }
+
+        if err := router.Run(":" + port); err != nil {
             log.Printf("❌ Server error: %v", err)
         }
     }()
